@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<nav>
+    <b><a href="{{ url_for('index') }}">ROI Dashboard</a></b>
+    <!-- <a href="#">About</a> -->
+</nav>
+<hr>
+<form action='/index' method="POST">
+
+    </br><br>
+    <b><label for="User">User</label></b>
+    <input id="User" name="User" type="text" value="{{request.form['User']}}"></input>
+
+    <b><label for="RAM"> RAM</label></b>
+    <select name="RAM" id="RAM">
+        <option value=0.75>1</option>
+        <option value=1.75>1.75</option>
+        <option value=2>2</option>
+        <option value=3>3</option>
+        <option value=3.5>3.5</option>
+        <option value=4>4</option>
+        <option value=7>7</option>
+        <option value=8>8</option>
+        <option value=14>14</option>
+        <option value=16>16</option>
+        <option value=32>32</option>
+        <option value=48>48</option>
+        <option value=56>56</option>
+        <option value=64>64</option>
+        <option value=80>80</option>
+        <option value=96>96</option>
+        <option value=112>112</option>
+        <option value=128>128</option>
+        <option value=144>144</option>
+        <option value=160>160</option>
+        <option value=176>176</option>
+        <option value=184>184</option>
+        <option value=192>192</option>
+        <option value=256>256</option>
+        <option value=320>320</option>
+        <option value=384>384</option>
+        <option value=512>512</option>
+    </select>
+    <br><br>
+    <b>
+        <lable>Number of vCPUs</lable>
+    </b>
+    <select name="vCPUs" id="vCPUs">
+        <option value=1>1</option>
+        <option value=2>2</option>
+        <option value=4>4</option>
+        <option value=8>8</option>
+        <option value=16>16</option>
+        <option value=32>32</option>
+        <option value=48>48</option>
+        <option value=64>64</option>
+        <option value=80>80</option>
+        <option value=96>96</option>
+        <option value=128>128</option>
+        <option value=192>192</option>
+    </select>
+    </br><br>
+    <b>
+        <lable>OS Image</lable>
+    </b>
+    <select name="OS" id="OS">
+        <option value="Linux">Linux</option>
+        <option value="RHEL">RHEL</option>
+        <option value="Windows">Windows</option>
+    </select>
+    </br><br>
+    <b><label for="fname">Node Storage:</label></b>
+    <input type="text" id="storage" name="NodeStorage" value="{{request.form['NodeStorage']}}">
+    </br><br>
+    <b>
+        <lable>Cloud</lable>
+    </b>
+    <select name="Cloud" id="Cloud">
+        <option value="GCP">GCP</option>
+        <option value="Azure">Azure</option>
+        <option value="AWS">AWS</option>
+    </select>
+    </br><br>
+    <b>
+        <lable>Number of Nodes</lable>
+    </b>
+    <select name="No of nodes" id="No of nodes">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+        <option value="19">19</option>
+        <option value="20">20</option>
+    </select>
+    </br><br>
+    <button type="submit" name="submit_button" value="submit">Submit</button>
+    <button type="submit" name="submit_button" value="compare">Compare</button>
+</form>
+<hr>
+{% include 'view.html' %}
+{% include 'graph.html' %}
+{% endblock %}

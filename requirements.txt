@@ -1,0 +1,9 @@
+openpyxl
+pandas
+flask_wtf
+gspread
+oauth2client
+flask
+charts
+plotly
+plot

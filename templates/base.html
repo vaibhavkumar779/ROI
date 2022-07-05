@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"
+        integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        nav a {
+            color: rgb(88, 73, 173);
+            font-size: 3em;
+            margin-left: 50px;
+            text-decoration: none;
+        }
+
+        body {
+            font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        }
+
+        a,
+        h1,
+        h2 {
+            color: #377ba8;
+        }
+
+        h1,
+        h2 {
+            margin: 0;
+        }
+
+        h1 {
+            border-bottom: 2px solid #eee;
+        }
+
+        h2 {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+
+<body>
+    {% block main %}
+    {% endblock %}
+
+</body>
+
+</html>
