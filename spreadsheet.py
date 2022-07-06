@@ -16,46 +16,54 @@ def sheet_init():
 
     return roi_sheet
 
-def aws_cost(RAM,vCPUs,OS,NodeStorage,Cloud,Number_of_Nodes):
+def aws_cost(RAM,vCPUs,OS,StorageUnitSize,Cloud,Number_of_Nodes,StorageType,Number_of_Storage_Units):
 
     aws_data = get_data("AWS")
     # AWS cost logic
-    # Node data with OS conditioning
-    aws_node = aws_data[(aws_data['Resource Type']=='Node')]
+    # Node data 
+    aws_node = aws_data[aws_data['Resource Type']=='Node']
     # vCPU and RAM
     aws_node = aws_node[(aws_node['vCPUs']>=vCPUs) & (aws_node['RAM']>=RAM) & (aws_data['OS']==OS)]
     aws_node = aws_node.drop(columns=['Resource Type','monthly','Storage count','Resource','Storage type','Network performance'])
 
     # taking 730 hours for month
-    aws_node['monthly cost'] = [ value * Number_of_Nodes * 730 for value in aws_node['hourly']]
+    aws_node['monthly cost node'] = [ value * Number_of_Nodes * 730 for value in aws_node['hourly']]
     aws_node_cost = aws_node
+
+    # Storage data
+    aws_store = aws_data[aws_data["Resource Type"] == 'Storage']
+    aws_store = aws_store[~ aws_store["Machine or Service"].str.contains(StorageType)]
+    print(aws_store)
 
     return aws_node_cost
 
-def gcp_cost(RAM,vCPUs,OS,NodeStorage,Cloud,Number_of_Nodes):
+def gcp_cost(RAM,vCPUs,OS,StorageUnitSize,Cloud,Number_of_Nodes,StorageType,Number_of_Storage_Units):
 
     gcp_data = get_data("GCP")
     # GCP cost logic
     # Node data 
-    gcp_node= gcp_data[(gcp_data['Resource Type']=='Node')]
+    gcp_node= gcp_data[gcp_data['Resource Type']=='Node']
     gcp_node = gcp_node[(gcp_node['vCPUs']>=vCPUs) & (gcp_node['RAM']>=RAM)]
     gcp_node = gcp_node.drop(columns=['Resource Type','monthly','hourly (Spot VM)','monthly (Spot VM)'])
-    gcp_node['monthly cost'] = [ value * Number_of_Nodes * 730 for value in gcp_node['hourly']]
+    gcp_node['monthly cost node'] = [ value * Number_of_Nodes * 730 for value in gcp_node['hourly']]
     gcp_node_cost = gcp_node
+
+    # Storage data
+    gcp_store = gcp_data[gcp_data["Resource Type"] == 'Storage']
 
     return gcp_node_cost
 
-def azure_cost(RAM,vCPUs,OS,NodeStorage,Cloud,Number_of_Nodes):
+def azure_cost(RAM,vCPUs,OS,StorageUnitSize,Cloud,Number_of_Nodes,StorageType,Number_of_Storage_Units):
     
     azure_data = get_data("Azure")
     # Azure Cost Logic
     # Node data 
     azure_node = azure_data[(azure_data['Resource Type']=='Node')]
-    azure_node = azure_node[(azure_node['vCPUs']>vCPUs) & (azure_node['RAM']>=RAM) & (azure_node['Storage']>=NodeStorage)]
+    azure_node = azure_node[(azure_node['vCPUs']>vCPUs) & (azure_node['RAM']>=RAM) & (azure_node['Storage']>=StorageUnitSize)]
     azure_node = azure_node.drop(columns=['Resource Type','monthly','1 year reserved hourly','1 year reserved monthly','3 year reserved hourly','3 year reserved monthly'])
     # cost data
     # taking 730 hours for month
-    azure_node['monthly cost'] = [ value * Number_of_Nodes * 730 for value in azure_node['hourly']]
+    azure_node['monthly cost node'] = [ value * Number_of_Nodes * 730 for value in azure_node['hourly']]
     azure_node_cost = azure_node
 
     return azure_node_cost
@@ -75,7 +83,7 @@ def get_data(cloud):
 
     return cloud_data  
 
-def cost_data_combine(aws_node_cost,gcp_node_cost,azure_node_cost):
+def cost_data_combine(aws_node_cost,gcp_node_cost,azure_node_cost,StorageType,Number_of_Storage_Units):
 
     aws_node_cost['Cloud'] = 'AWS'
     gcp_node_cost['Cloud'] = 'GCP'
