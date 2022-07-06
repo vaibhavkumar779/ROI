@@ -8,9 +8,30 @@
 <hr>
 <form action='/index' method="POST">
 
-    </br><br>
     <b><label for="User">User</label></b>
     <input id="User" name="User" type="text" value="{{request.form['User']}}"></input>
+    </br><br>
+
+
+    <b>
+        <lable>Cloud</lable>
+    </b>
+    <select name="Cloud" id="Cloud">
+        <option value="GCP">GCP</option>
+        <option value="Azure">Azure</option>
+        <option value="AWS">AWS</option>
+    </select>
+    <br></br>
+
+
+    <b>
+        <lable>OS Image</lable>
+    </b>
+    <select name="OS" id="OS">
+        <option value="Linux">Linux</option>
+        <option value="RHEL">RHEL</option>
+        <option value="Windows">Windows</option>
+    </select>
 
     <b><label for="RAM"> RAM</label></b>
     <select name="RAM" id="RAM">
@@ -42,7 +63,7 @@
         <option value=384>384</option>
         <option value=512>512</option>
     </select>
-    <br><br>
+
     <b>
         <lable>Number of vCPUs</lable>
     </b>
@@ -60,28 +81,9 @@
         <option value=128>128</option>
         <option value=192>192</option>
     </select>
-    </br><br>
-    <b>
-        <lable>OS Image</lable>
-    </b>
-    <select name="OS" id="OS">
-        <option value="Linux">Linux</option>
-        <option value="RHEL">RHEL</option>
-        <option value="Windows">Windows</option>
-    </select>
-    </br><br>
-    <b><label for="fname">Node Storage:</label></b>
-    <input type="text" id="storage" name="NodeStorage" value="{{request.form['NodeStorage']}}">
-    </br><br>
-    <b>
-        <lable>Cloud</lable>
-    </b>
-    <select name="Cloud" id="Cloud">
-        <option value="GCP">GCP</option>
-        <option value="Azure">Azure</option>
-        <option value="AWS">AWS</option>
-    </select>
-    </br><br>
+
+    <br><br>
+
     <b>
         <lable>Number of Nodes</lable>
     </b>
@@ -108,8 +110,28 @@
         <option value="20">20</option>
     </select>
     </br><br>
-    <button type="submit" name="submit_button" value="submit">Submit</button>
-    <button type="submit" name="submit_button" value="compare">Compare</button>
+    <b><label for="fname">Storage:</label></b>
+    <input type="text" id="storage" name="NodeStorage" value="{{request.form['NodeStorage']}}">
+
+    <b>
+        <b>
+            <lable>Type of Storage</lable>
+        </b>
+        <select name="type of storage" id="OS">
+            <option value="Magnetic">Magnetic</option>
+            <option value="SSD">SSD</option>
+        </select>
+
+        <b><label for="fname">Storage Size of each block:</label></b>
+        <input type="text" id="storage" name="NodeStorage" value="{{request.form['NodeStorage']}}">
+        </br><br>
+        <b>
+
+
+            </br>
+            <button type="submit" name="submit_button" value="submit">Submit</button>
+            <button type="submit" name="submit_button" value="compare">Compare</button>
+
 </form>
 <hr>
 {% include 'view.html' %}
