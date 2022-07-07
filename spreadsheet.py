@@ -32,10 +32,15 @@ def aws_cost(RAM,vCPUs,OS,StorageUnitSize,Cloud,Number_of_Nodes,StorageType,Numb
 
     # Storage data
     aws_store = aws_data[aws_data["Resource Type"] == 'Storage']
-    aws_store = aws_store[~ aws_store["Machine or Service"].str.contains(StorageType)]
-    print(aws_store)
+    if StorageType == "Magnetic":
+        aws_store = aws_store[~ aws_store["Machine or Service"].str.contains(StorageType)]
+    else:
+        aws_store = aws_store[aws_store["Machine or Service"].str.contains(StorageType)]
+    aws_store['Number of Units'] = Number_of_Storage_Units
+    aws_store['Overall Storage cost'] = aws_store['monthly'] * StorageUnitSize * Number_of_Storage_Units
+    aws_store_cost = aws_store.drop(columns=['vCPUs','RAM','Network performance','OS'])
 
-    return aws_node_cost
+    return aws_node_cost,aws_store_cost
 
 def gcp_cost(RAM,vCPUs,OS,StorageUnitSize,Cloud,Number_of_Nodes,StorageType,Number_of_Storage_Units):
 
@@ -50,8 +55,11 @@ def gcp_cost(RAM,vCPUs,OS,StorageUnitSize,Cloud,Number_of_Nodes,StorageType,Numb
 
     # Storage data
     gcp_store = gcp_data[gcp_data["Resource Type"] == 'Storage']
+    gcp_store['Number of Units'] = Number_of_Storage_Units
+    gcp_store['Overall Storage cost'] = gcp_store['hourly (Spot VM)'] * StorageUnitSize * Number_of_Storage_Units
+    gcp_store_cost = gcp_store.drop(columns=['vCPUs','RAM','hourly','monthly','monthly (Spot VM)'])
 
-    return gcp_node_cost
+    return gcp_node_cost, gcp_store_cost
 
 def azure_cost(RAM,vCPUs,OS,StorageUnitSize,Cloud,Number_of_Nodes,StorageType,Number_of_Storage_Units):
     
