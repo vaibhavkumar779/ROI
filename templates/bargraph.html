@@ -1,7 +1,3 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"
-    integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 <div style="width: 50%; float: right;">
     <canvas id="barchart"></canvas>
     <script>
@@ -15,12 +11,12 @@
                 label: "Cost of Node",
                 data: {{ values | safe }},
             backgroundColor: [
-            'rgba(255, 159, 64, 0.2)', //orange aws
-            'rgba(255, 159, 64, 0.2)', //orange aws
-            'rgba(54, 162, 235, 0.2)', //gcp blue
-            'rgba(54, 162, 235, 0.2)', //gcp blue
-            'rgba(153, 102, 255, 0.2)',//azure purple
-            'rgba(153, 102, 255, 0.2)',//azure purple
+                'rgba(255, 159, 64, 0.2)', //orange aws
+                'rgba(255, 159, 64, 0.2)', //orange aws
+                'rgba(54, 162, 235, 0.2)', //gcp blue
+                'rgba(54, 162, 235, 0.2)', //gcp blue
+                'rgba(153, 102, 255, 0.2)',//azure purple
+                'rgba(153, 102, 255, 0.2)',//azure purple
             ],
             borderColor: [
                 'rgba(255, 159, 64, 1)',
