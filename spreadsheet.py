@@ -124,7 +124,7 @@ def cost_data_combine(aws_node_cost, gcp_node_cost, azure_node_cost, gcp_store_c
     aws_storage_name = aws_store_cost['Machine or Service'].values.tolist()
     for i in range(len(aws_storage_cost)):
         aws_node_cost["Storage type"] = aws_storage_name[i]
-        aws_node_cost["Cost with Storage"] = aws_node_cost['monthly cost node'] + \
+        aws_node_cost["Monthly Cost with Storage"] = aws_node_cost['monthly cost node'] + \
             aws_storage_cost[i]
         
 
@@ -133,19 +133,19 @@ def cost_data_combine(aws_node_cost, gcp_node_cost, azure_node_cost, gcp_store_c
     gcp_storage_name = gcp_store_cost['Machine or Service'].values.tolist()
     for i in range(len(gcp_storage_cost)):
         gcp_node_cost["Storage type"] = gcp_storage_name[i]
-        gcp_node_cost["Cost with Storage"] = gcp_node_cost['monthly cost node'] + \
+        gcp_node_cost["Monthly Cost with Storage"] = gcp_node_cost['monthly cost node'] + \
             gcp_storage_cost[i]
         
 
-    azure_node_cost['Cost with Storage'] = azure_node_cost['monthly cost node']
+    azure_node_cost['Monthly Cost with Storage'] = azure_node_cost['monthly cost node']
 
     # sorting
-    gcp_cost = gcp_node_cost.sort_values(by = ['Cost with Storage'])
-    aws_cost = aws_node_cost.sort_values(['Cost with Storage'])
-    azure_cost = azure_node_cost.sort_values(by=['Cost with Storage'])
+    gcp_cost = gcp_node_cost.sort_values(by = ['Monthly Cost with Storage']).drop(columns=['hourly'])
+    aws_cost = aws_node_cost.sort_values(['Monthly Cost with Storage']).drop(columns=['hourly'])
+    azure_cost = azure_node_cost.sort_values(by=['Monthly Cost with Storage']).drop(columns=['hourly'])
     # comining cost
     combine_node_cost = pd.concat(
         [aws_cost.head(2), gcp_cost.head(2), azure_cost.head(2)], join='outer', axis=0).fillna(0)
     combine_node_cost.reset_index(drop=True, inplace=True)  # index reset
 
-    return combine_node_cost
+    return combine_node_cost,gcp_cost.head(2),aws_cost.head(2),azure_cost.head(2)

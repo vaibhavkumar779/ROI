@@ -61,14 +61,14 @@ def costdata():
                 RAM, vCPUs, OS, StorageUnitSize, Cloud, Number_of_Nodes, StorageType, Number_of_Storage_Units)
             azure_node_cost = spreadsheet.azure_cost(
                 RAM, vCPUs, OS, StorageUnitSize, Cloud, Number_of_Nodes, StorageType, Number_of_Storage_Units)
-            combine_cost = spreadsheet.cost_data_combine(
+            combine_cost,gcp_cost,aws_cost,azure_cost = spreadsheet.cost_data_combine(
                 aws_node_cost, gcp_node_cost, azure_node_cost, gcp_store_cost, aws_store_cost, StorageType, Number_of_Storage_Units)
 
             labels = combine_cost['Machine or Service'].values.tolist()
-            values = combine_cost['Cost with Storage'].values.tolist()
+            values = combine_cost['Monthly Cost with Storage'].values.tolist()
 
             return render_template('index.html', title="Dashboard", labels=labels, values=values,
-                                   tables=[aws_node_cost.to_html(index=False), gcp_node_cost.to_html(index=False), azure_node_cost.to_html(index=False)], titles=['Ae', 'AWS', 'GCP Node', 'Azure Node'], Heading="Compare Data")
+                                   tables=[aws_cost.to_html(index=False), gcp_cost.to_html(index=False), azure_cost.to_html(index=False)], titles=['Ae', 'AWS', 'GCP Node', 'Azure Node'], Heading="Compare Data")
     elif request.method == 'GET':
         return render_template('index.html', title="Dashboard")
 
