@@ -5,7 +5,30 @@
     <b><a href="{{ url_for('index') }}">ROI Dashboard</a></b>
 </nav>
 <hr>
-<form action='/index' method="POST">
+<script>
+    function validateForm() {
+      var x = document.forms["myForm"]["User"].value;
+      var y = document.forms["myForm"]["Storage Size"].value;
+      if (x == "" || x == null) {
+        if (y == "" || y == null) {
+        alert("User and storage size must be filled out");
+        return false;
+      }
+      else{
+        alert("User Name must be filled out");
+        return false;
+      }
+
+    }
+    if (y == "" || y == null) {
+        alert("storage size must be filled out");
+        return false; 
+    }
+    }
+     
+  
+    </script>
+<form name="myForm" action='/index' method="POST" onsubmit="return validateForm()" method="post" required>
 
     <!-- User Data Input -->
     <b><label for="User">User</label></b>
