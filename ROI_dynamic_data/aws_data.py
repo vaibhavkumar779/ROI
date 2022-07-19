@@ -4,15 +4,17 @@ import json
 url = "https://pricing.us-east-1.amazonaws.com"
 
 def save_data(json_data, service_name):
-    with open('./AWS_DATA/{} Data.json'.format(service_name), 'w') as json_file:
+    with open('./AWS_DATA/{}.json'.format(service_name), 'w') as json_file:
         json.dump(json_data, json_file)
 
 
 def get_data(url):
+    services_required = ["AmazonRDS","AmazonS3","AmazonVPC","AmazonSNS","AWSELB","AmazonEC2","AmazonEKS","AWSELB"]
     service_data = get_services_index(url)
     services = service_data["offers"] #this gives the dictionary of services
 
-    for service in services.values():
+    for service_required in services_required:
+        service = services[service_required]
         service_url = url + service["currentVersionUrl"]
         json_data = requests.get(service_url).json()
         save_data(json_data,service["offerCode"])

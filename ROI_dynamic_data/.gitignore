@@ -1,5 +1,8 @@
 AWS_DATA/
 GCP_DATA/
+AWS_DATA/*
+GCP_DATA/*
 aws_services.json
 azure.json
 gcp_services.json
+env.txt
